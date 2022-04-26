@@ -9,17 +9,17 @@ import { NavLink } from "react-router-dom";
 export const Navigation = () => {
   return (
     <nav className="nav">
-      <NavLink to="/blog" activeClassName="active">
+      <NavLink exact to="/blog" activeClassName="active">
         <LaptopChromebookIcon />
         <span>Blog</span>
       </NavLink>
       
-      <NavLink to="/favourite" activeClassName="active">
+      <NavLink exact to="/favourite" activeClassName="active">
         <LocalActivityIcon />
         <span>Favorite</span>
       </NavLink>
       
-      <NavLink to="/settings" activeClassName="active">
+      <NavLink exact to="/settings" activeClassName="active">
         <SettingsIcon />
         <span>Settings</span>
       </NavLink>

@@ -52,7 +52,7 @@ export const BlogPage = ({
     setSelectedPost(post);
     setShowEditForm(true);
   };
-  if (isLoading) return <h1>Получаем данные...</h1>;
+  if (isLoading) return <h1>Getting a data...</h1>;
   if (error) return <h1>{error.message}</h1>;
 
   return (
@@ -68,10 +68,7 @@ export const BlogPage = ({
         {(isLikedPosts ? likedPosts : blogPosts).map((post, pos) => {
           return (
             <Post
-              title={post.title}
-              description={post.description}
-              liked={post.liked}
-              image={post.image}
+              {...post}
               likePost={() => likePost(pos)}
               deletePost={() => deletePost(post.id)}
               selectPost={() => selectPost(post)}

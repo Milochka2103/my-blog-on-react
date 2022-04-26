@@ -1,34 +1,32 @@
-import { Sidebar } from "./Sidebar/Sidebar";
-import "./MainBlock.css";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { POSTS_URL } from "../../Utils/constants";
-import { useFetchPosts } from "../../Utils/hooks";
-import { BlogPage } from "../../pages/BlogPage/BlogPage";
-import { NoMatch } from "../../pages/NoMatch/NoMatch";
+import { Sidebar } from './Sidebar/Sidebar';
+import './MainBlock.css';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { BlogPage } from '../../pages/BlogPage/BlogPage';
+import { BlogPostPage } from '../../pages/BlogPostPage/BlogPostPage';
 
-export const MainBlock = ({ setIsLoggedIn }) => {
-  const postsData = useFetchPosts(POSTS_URL);
+export const MainBlock = ({ setIsLoggedIn, postsData }) => {
 
   return (
     <>
       <Sidebar setIsLoggedIn={setIsLoggedIn} />
-      <main className="mainBlock">
+      <main className='mainBlock'>
         <Switch>
-          <Route path="/blog">
-            <BlogPage title="Posts" {...postsData} />
+          <Route exact path='/blog'>
+            <BlogPage title='Posts' {...postsData} />
           </Route>
 
-          <Route path="/favourite">
-            <BlogPage title="Favourite posts" {...postsData} isLikedPosts />
+          <Route exact path='/favourite'>
+            <BlogPage title='Favourite posts' {...postsData} isLikedPosts />
+          </Route>
+
+          <Route path='/blog/:postId'>
+            <BlogPostPage setBlogPosts={postsData.setBlogPosts} />
           </Route>
 
           <Route exact path='/'>
           <Redirect to='/blog' />
         </Route>
 
-          <Route path="*">
-            <NoMatch />
-          </Route>
         </Switch>
       </main>
     </>

@@ -1,29 +1,44 @@
-import { useState } from 'react';
-import { Switch } from 'react-router-dom';
-import './App.css';
-import { MainBlock } from './components/MainBlock/MainBlock';
-import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
-import { PublicRoute } from './components/PublicRoute/PublicRoute';
-import { LoginPage } from './pages/LoginPage/LoginPage';
+import { useState } from "react";
+import { Switch } from "react-router-dom";
+import "./App.css";
+import { MainBlock } from "./components/MainBlock/MainBlock";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import { PublicRoute } from "./components/PublicRoute/PublicRoute";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
+import { POSTS_URL } from "./Utils/constants";
+import { useFetchPosts} from "./Utils/hooks";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem('isLoggedIn') === 'true'
+    localStorage.getItem("isLoggedIn") === "true"
   );
 
-  return (
-    <div className='App'>
-      <Switch>
+  const postsData = useFetchPosts(POSTS_URL);
 
-        <PublicRoute exact path='/login' isLoggedIn={isLoggedIn}>
+  const blogPostRoutes = postsData.blogPosts.map((post) => {
+    return `/blog/${post.id}`;
+  });
+  console.log(blogPostRoutes);
+
+  return (
+    <div className="App">
+      <Switch>
+        <PublicRoute
+          exact
+          path="/login"
+          isLoggedIn={isLoggedIn}
+          blogPostRoutes={blogPostRoutes}
+        >
           <LoginPage setIsLoggedIn={setIsLoggedIn} />;
         </PublicRoute>
 
-        <PrivateRoute path='/' isLoggedIn={isLoggedIn}>
-          <MainBlock setIsLoggedIn={setIsLoggedIn} />
+        <PrivateRoute
+          path="/"
+          isLoggedIn={isLoggedIn}
+          blogPostRoutes={blogPostRoutes}
+        >
+          <MainBlock setIsLoggedIn={setIsLoggedIn} postsData={postsData} />
         </PrivateRoute>
-
-
       </Switch>
     </div>
   );

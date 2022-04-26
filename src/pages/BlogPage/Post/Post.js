@@ -1,11 +1,13 @@
-import React from "react";
-import "./Post.css";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import imagePlaceholder from "../../../assets/images/file-not-found.jpg";
+import React from 'react';
+import './Post.css';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import imagePlaceholder from '../../../assets/images/file-not-found.jpg';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { Link } from 'react-router-dom';
 
 export const Post = ({
+  id,
   title,
   description,
   liked = false,
@@ -15,14 +17,14 @@ export const Post = ({
   selectPost
 }) => {
 
-  const customFilling = liked ? "crimson" : "black";
+  const customFilling = liked ? 'crimson' : 'black';
 
   const finalDescription = (
     <p>
       {description.length > 70 ? (
         <>
           {description.slice(0, 101)}...
-          <a href="/">Read more</a>
+          <Link to={`/blog/${id}`}>Read more</Link>
         </>
       ) : (
         description
@@ -31,18 +33,18 @@ export const Post = ({
   )
 
   return (
-    <div className="post">
-      <img src={image} alt="post" />
+    <div className='post'>
+      <img src={image} alt='post' />
       <h2>{title}</h2>
       {finalDescription}
-      <div className="actions">
-        <button onClick={likePost} className="likeBtn">
+      <div className='actions'>
+        <button onClick={likePost} className='likeBtn'>
           <FavoriteIcon style={{ fill: customFilling }} />
         </button>
-        <button onClick={deletePost} className="deleteBtn">
+        <button onClick={deletePost} className='deleteBtn'>
           <DeleteIcon />
         </button>
-        <button onClick={selectPost} className="editBtn">
+        <button onClick={selectPost} className='editBtn'>
           <EditIcon />
         </button>
       </div>
